@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const STORAGE_KEY = 'mani_uzdevumi_tasks';
 
   const taskInput = document.getElementById('task-input');
+  const dueDateInput = document.getElementById('due-date-input');
   const addBtn = document.getElementById('add-btn');
   const taskList = document.getElementById('task-list');
   const filterBtns = document.querySelectorAll('.filter-btn');
@@ -28,21 +29,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // U2 Palīgfunkcija 1: Datuma formatēšana (YYYY-MM-DD -> DD.MM.YYYY)
+  function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      return `${parts[2]}.${parts[1]}.${parts[0]}`;
+    }
+    return dateStr;
+  }
+
+  // U2 Palīgfunkcija 2: Pārbaude, vai termiņš ir pagātnē (nokavēts)
+  function isOverdue(dueDate, completed) {
+    if (!dueDate || completed) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const due = new Date(dueDate);
+    due.setHours(0, 0, 0, 0);
+    return due < today;
+  }
+
+  // U2 Palīgfunkcija 3: Datuma birkas DOM elementa izveide
+  function createDateBadge(dueDate, completed) {
+    if (!dueDate) return null;
+    const badge = document.createElement('span');
+    badge.className = 'task-date';
+    const formatted = formatDate(dueDate);
+    const overdue = isOverdue(dueDate, completed);
+    badge.textContent = overdue ? `📅 ${formatted} (nokavēts)` : `📅 ${formatted}`;
+    return badge;
+  }
+
   function addTask() {
     const text = taskInput.value.trim();
     if (!text) {
       return;
     }
 
+    const dueDate = dueDateInput && dueDateInput.value ? dueDateInput.value : null;
+
     const newTask = {
       id: Date.now().toString(),
       text: text,
-      completed: false
+      completed: false,
+      dueDate: dueDate
     };
 
     tasks.push(newTask);
     saveTasks();
     taskInput.value = '';
+    if (dueDateInput) {
+      dueDateInput.value = '';
+    }
     taskInput.focus();
     render();
   }
@@ -116,8 +154,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function createTaskElement(task) {
+    const overdue = isOverdue(task.dueDate, task.completed);
+
     const li = document.createElement('li');
-    li.className = `task-item${task.completed ? ' completed' : ''}`;
+    li.className = `task-item${task.completed ? ' completed' : ''}${overdue ? ' overdue' : ''}`;
     li.dataset.id = task.id;
 
     const contentDiv = document.createElement('div');
@@ -142,6 +182,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     contentDiv.appendChild(checkbox);
     contentDiv.appendChild(span);
+
+    // Pievienojam termiņa birku, ja tāds ir norādīts
+    const dateBadge = createDateBadge(task.dueDate, task.completed);
+    if (dateBadge) {
+      contentDiv.appendChild(dateBadge);
+    }
 
     const deleteBtn = document.createElement('button');
     deleteBtn.type = 'button';
