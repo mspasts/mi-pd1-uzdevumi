@@ -61,6 +61,63 @@ document.addEventListener('DOMContentLoaded', () => {
     render();
   }
 
+  // Papildfunkcija A: Rediģēšanas uzsākšana
+  function startEdit(id, textSpan, container) {
+    const task = tasks.find(t => t.id === id);
+    if (!task) return;
+
+    const editInput = document.createElement('input');
+    editInput.type = 'text';
+    editInput.className = 'edit-input';
+    editInput.value = task.text;
+
+    // Neļaujam klikšķiem ievades laukā pārslēgt checkbox
+    editInput.addEventListener('click', (e) => e.stopPropagation());
+    editInput.addEventListener('dblclick', (e) => e.stopPropagation());
+
+    container.replaceChild(editInput, textSpan);
+    editInput.focus();
+    editInput.select();
+
+    let isFinished = false;
+
+    function handleFinish(save) {
+      if (isFinished) return;
+      isFinished = true;
+      if (save) {
+        finishEdit(id, editInput.value);
+      } else {
+        render(); // Atceļ rediģēšanu
+      }
+    }
+
+    editInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
+        handleFinish(true);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        e.stopPropagation();
+        handleFinish(false);
+      }
+    });
+
+    editInput.addEventListener('blur', () => {
+      handleFinish(true);
+    });
+  }
+
+  // Papildfunkcija A: Rediģēšanas pabeigšana
+  function finishEdit(id, newText) {
+    const trimmed = newText.trim();
+    if (trimmed) {
+      tasks = tasks.map(t => (t.id === id ? { ...t, text: trimmed } : t));
+      saveTasks();
+    }
+    render();
+  }
+
   function getFilteredTasks() {
     if (currentFilter === 'active') {
       return tasks.filter(task => !task.completed);
@@ -91,8 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
         li.className = `task-item${task.completed ? ' completed' : ''}`;
         li.dataset.id = task.id;
 
-        const label = document.createElement('label');
-        label.className = 'task-content';
+        // Izmantojam div nevis label, lai klikšķi/dubultklikšķi uz teksta netraucētu checkboxam
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'task-content';
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
@@ -102,10 +160,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const span = document.createElement('span');
         span.className = 'task-text';
-        span.textContent = task.text; // Droša teksta attēlošana pret XSS
+        span.textContent = task.text;
+        span.title = 'Dubultklikšķis, lai rediģētu';
 
-        label.appendChild(checkbox);
-        label.appendChild(span);
+        // Dubultklikšķis rediģēšanai
+        span.addEventListener('dblclick', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          startEdit(task.id, span, contentDiv);
+        });
+
+        contentDiv.appendChild(checkbox);
+        contentDiv.appendChild(span);
 
         const deleteBtn = document.createElement('button');
         deleteBtn.type = 'button';
@@ -114,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteBtn.setAttribute('aria-label', `Dzēst uzdevumu: ${task.text}`);
         deleteBtn.addEventListener('click', () => deleteTask(task.id));
 
-        li.appendChild(label);
+        li.appendChild(contentDiv);
         li.appendChild(deleteBtn);
         taskList.appendChild(li);
       });
