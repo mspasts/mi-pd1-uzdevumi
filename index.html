@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mani uzdevumi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-container">
+    <header class="app-header">
+      <h1>Mani uzdevumi</h1>
+    </header>
+
+    <section class="input-section">
+      <input 
+        type="text" 
+        id="task-input" 
+        placeholder="Ievadiet jaunu uzdevumu..." 
+        aria-label="Jauns uzdevums"
+        autocomplete="off"
+      >
+      <button type="button" id="add-btn">Pievienot</button>
+    </section>
+
+    <section class="controls-section">
+      <div class="filters" role="group" aria-label="Uzdevumu filtri">
+        <button type="button" class="filter-btn active" data-filter="all">Visi</button>
+        <button type="button" class="filter-btn" data-filter="active">Aktīvie</button>
+        <button type="button" class="filter-btn" data-filter="completed">Izpildītie</button>
+      </div>
+      <span id="tasks-counter" class="counter">Atlikuši: 0</span>
+    </section>
+
+    <ul id="task-list" class="task-list"></ul>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

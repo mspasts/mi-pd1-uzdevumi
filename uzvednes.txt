@@ -1,0 +1,30 @@
+# Uzdevuma apraksts
+
+Loma:
+Tu esi pieredzējis front-end izstrādātājs.
+
+Mērķis:
+Izveidot vienkāršu, funkcionējošu uzdevumu saraksta (To-Do) lietotni "Mani uzdevumi", kas darbojas pārlūkprogrammā lokāli bez servera un bez interneta.
+
+Tehnoloģijas:
+HTML5, CSS3, JavaScript (ES6+), LocalStorage. Bez ārējām bibliotēkām un ietvariem.
+
+Funkcijas un prasības:
+1. Uzdevumu pievienošana: ievades lauks (ar id="task-input") un poga pievienošanai. Ievadei jāapstrādā Enter taustiņa nospiešana.
+2. Datu validācija: nedrīkst ļaut pievienot tukšu uzdevumu vai uzdevumu, kas sastāv tikai no atstarpēm (jāizmanto trim()).
+3. Saraksts un datu struktūra: katram uzdevumam ir id, teksts un izpildes statuss (completed). Katram saraksta elementam jābūt data-id atribūtam.
+4. Izpildes statuss: iespēja atzīmēt uzdevumu kā izpildītu (pārsvītrots teksts).
+5. Dzēšana: poga katram uzdevumam tā dzēšanai.
+6. Filtri: pogas ar atribūtu data-filter ("all", "active", "completed"), kas filtrē redzamos uzdevumus un izceļ aktīvo filtru.
+7. Drošība: lietotāja ievadītais teksts jāattēlo kā vienkāršs teksts (textContent), nevis HTML, lai izvairītos no XSS.
+8. Saglabāšana: visi uzdevumi tiek saglabāti LocalStorage un ielādēti lapas atvēršanas/atsvaidzināšanas brīdī.
+9. Skaitītājs: rāda atlikušo aktīvo uzdevumu skaitu.
+
+Ierobežojumi:
+Tikai tīrs HTML, CSS un JS. Visiem failiem jādarbojas, atverot index.html ar dubultklikšķi (file:// protokols).
+
+Izvades formāts:
+Sniedz kodu 3 atsevišķos blokos:
+1. index.html
+2. style.css
+3. app.js
