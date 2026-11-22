@@ -272,6 +272,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Added UI controls for sorting and clearing completed tasks
+  const sortBtn = document.getElementById('sort-btn');
+  if (sortBtn) {
+    sortBtn.addEventListener('click', () => {
+      sortTasksAtoZ();
+    });
+  }
+
+  const clearBtn = document.getElementById('clear-btn');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      clearCompleted();
+    });
+  }
+
+  // Sorting function (U4 – Claude implementation)
+  function sortTasksAtoZ() {
+    tasks.sort((a, b) => a.text.localeCompare(b.text, 'lv', { sensitivity: 'base' }));
+    saveTasks();
+    render();
+  }
+
+  // Clear completed tasks (U5)
+  function clearCompleted() {
+    tasks = tasks.filter(t => !t.completed);
+    saveTasks();
+    render();
+  }
+
+  // Sākotnējā ielāde
+  render();
+  addBtn.addEventListener('click', addTask);
+
+  taskInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      addTask();
+    }
+  });
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      render();
+    });
+  });
+
   // Sākotnējā ielāde
   render();
 });

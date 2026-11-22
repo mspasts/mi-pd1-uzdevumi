@@ -79,3 +79,20 @@
 
 **3. Kāpēc ir lietderīgi salīdzināt vairākus modeļus Git zaros un kā tas palīdz izvēlēties labāko risinājumu?**  
 *Atbilde:* Dažādi modeļi var atšķirīgi interpretēt prasības (piemēram, lokalizēto šķirošanu ar `localeCompare`). Izstrāde atsevišķos zaros ļauj neatkarīgi testēt abu modeļu kodu ar reāliem testa datiem, novērtēt to kvalitāti un tīri sapludināt (`merge`) tikai to risinājumu, kurš pierādījis savu pareizību.
+
+## Placeholder tabula T4 – Modeļu salīdzinājums (Kārtošana A‑Z)
+
+| Model / Zars | Testa dati | Sākotnējais rezultāts | Kļūdas labošana | Galīgais statuss | Zara Commit ID |
+|--------------|------------|-----------------------|----------------|------------------|----------------|
+| Claude (kartosana-claude) | Zemene, Ābols, Čipsi, Cukurs, Šķiņķis, Siers | Pareiza secība ar `localeCompare('lv')` | Nav | ✅ Veiksmīgs | *(komita ID)* |
+| ChatGPT (kartosana-chatgpt) | Vienādas dati | ASCII kārtošana – nepareiza latviešu diakritiskie simboli | Pievienots `localeCompare('lv')` | ✅ Labots | *(komita ID)* |
+
+## Placeholder tabula T5 – Kopsavilkums & “Dzēst izpildītos”
+
+| Aspekts | Apraksts | Status |
+|--------|----------|--------|
+| UI pogas | “Kārtot A‑Z” un “Dzēst izpildītos” pievienotas `index.html` | ✅ Pievienotas |
+| Sortēšanas funkcija | `sortTasksAtoZ()` – locale‑aware, iekš `app.js` | ✅ Darbojas |
+| Clear‑completed funkcija | `clearCompleted()` – filtrē, saglabā, renderē | ✅ Darbojas |
+| Testa dati (placeholder) | 6 uzdevumi ar dažādām diakritiskajām zīmēm | ✅ Pārbaudīts |
+| Commit ID | *(pēc komita tiks pievienots)* | — |
