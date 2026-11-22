@@ -9,10 +9,10 @@
 ## T1. MI darba žurnāls
 
 | Nr. | Rīks un modelis | Uzvednes mērķis | Rezultāts | Ko mainīju pats | Commit ID |
-| :---: | :--- | :--- | :--- | :--- | :--- |
+| :---: | :--- | :--- | :--- | :--- | :---: |
 | **1** | ChatGPT, bezmaksas plāns *(vai cits)* | Pirmā versija | Kods ģenerēts (3 faili) | Nekas | `0b25ef4` |
-| **2** | ChatGPT / cits | Kļūdas labošana (trim funkcija) | Labota `addTask` funkcija | Iekopēju funkciju `app.js` | *(nākamais)* |
-| **3** | ChatGPT / cits | Papildfunkcija A (rediģēšana) | Pievienotas rediģēšanas funkcijas | Iekopēts kods | *(nākamais)* |
+| **2** | ChatGPT / cits | Kļūdas labošana un pārbaudes | Pārbaudes pabeigtas | Fiksēti rezultāti | `84d0059` |
+| **3** | ChatGPT / cits | Papildfunkcija A (rediģēšana) | Pievienota rediģēšana ar Enter un Escape | Labota integrācija (div nevis label) | `6ee2d1b` |
 
 ---
 
@@ -36,8 +36,8 @@
 ## T3. Kļūdu reģistrs
 
 | Kur radās kļūda | Kļūdas apraksts | Kā tika labots | Labojuma Commit ID |
-| :--- | :--- | :--- | :--- |
-| `addTask` funkcija (`app.js`) | Ievadot tikai atstarpes, sarakstā tika pievienota tukša rinda un skaitītājs palielinājās. | Funkcijā ievades tekstam pievienota `.trim()` metode un pārbaude `if (!text) return;`. | *(ierakstiet labojuma komita ID)* |
+| :--- | :--- | :--- | :---: |
+| `addTask` funkcija (`app.js`) | Ievadot tikai atstarpes, sarakstā tika pievienota tukša rinda un skaitītājs palielinājās. | Funkcijā ievades tekstam pievienota `.trim()` metode un pārbaude `if (!text) return;`. | `84d0059` |
 
 ---
 
