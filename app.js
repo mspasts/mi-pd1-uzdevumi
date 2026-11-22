@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
     render();
   }
 
-  // Papildfunkcija A: Rediģēšanas uzsākšana
   function startEdit(id, textSpan, container) {
     const task = tasks.find(t => t.id === id);
     if (!task) return;
@@ -71,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     editInput.className = 'edit-input';
     editInput.value = task.text;
 
-    // Neļaujam klikšķiem ievades laukā pārslēgt checkbox
     editInput.addEventListener('click', (e) => e.stopPropagation());
     editInput.addEventListener('dblclick', (e) => e.stopPropagation());
 
@@ -87,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (save) {
         finishEdit(id, editInput.value);
       } else {
-        render(); // Atceļ rediģēšanu
+        render();
       }
     }
 
@@ -108,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Papildfunkcija A: Rediģēšanas pabeigšana
   function finishEdit(id, newText) {
     const trimmed = newText.trim();
     if (trimmed) {
@@ -116,6 +113,46 @@ document.addEventListener('DOMContentLoaded', () => {
       saveTasks();
     }
     render();
+  }
+
+  function createTaskElement(task) {
+    const li = document.createElement('li');
+    li.className = `task-item${task.completed ? ' completed' : ''}`;
+    li.dataset.id = task.id;
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'task-content';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'task-checkbox';
+    checkbox.checked = task.completed;
+    checkbox.addEventListener('change', () => toggleTask(task.id));
+
+    const span = document.createElement('span');
+    span.className = 'task-text';
+    span.textContent = task.text;
+    span.title = 'Dubultklikšķis, lai rediģētu';
+
+    span.addEventListener('dblclick', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      startEdit(task.id, span, contentDiv);
+    });
+
+    contentDiv.appendChild(checkbox);
+    contentDiv.appendChild(span);
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.type = 'button';
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.textContent = 'Dzēst';
+    deleteBtn.setAttribute('aria-label', `Dzēst uzdevumu: ${task.text}`);
+    deleteBtn.addEventListener('click', () => deleteTask(task.id));
+
+    li.appendChild(contentDiv);
+    li.appendChild(deleteBtn);
+    return li;
   }
 
   function getFilteredTasks() {
@@ -144,45 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
       taskList.appendChild(emptyMessage);
     } else {
       filteredTasks.forEach(task => {
-        const li = document.createElement('li');
-        li.className = `task-item${task.completed ? ' completed' : ''}`;
-        li.dataset.id = task.id;
-
-        // Izmantojam div nevis label, lai klikšķi/dubultklikšķi uz teksta netraucētu checkboxam
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'task-content';
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.className = 'task-checkbox';
-        checkbox.checked = task.completed;
-        checkbox.addEventListener('change', () => toggleTask(task.id));
-
-        const span = document.createElement('span');
-        span.className = 'task-text';
-        span.textContent = task.text;
-        span.title = 'Dubultklikšķis, lai rediģētu';
-
-        // Dubultklikšķis rediģēšanai
-        span.addEventListener('dblclick', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          startEdit(task.id, span, contentDiv);
-        });
-
-        contentDiv.appendChild(checkbox);
-        contentDiv.appendChild(span);
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.type = 'button';
-        deleteBtn.className = 'delete-btn';
-        deleteBtn.textContent = 'Dzēst';
-        deleteBtn.setAttribute('aria-label', `Dzēst uzdevumu: ${task.text}`);
-        deleteBtn.addEventListener('click', () => deleteTask(task.id));
-
-        li.appendChild(contentDiv);
-        li.appendChild(deleteBtn);
-        taskList.appendChild(li);
+        taskList.appendChild(createTaskElement(task));
       });
     }
 
