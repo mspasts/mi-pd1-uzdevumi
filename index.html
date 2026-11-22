@@ -29,6 +29,31 @@
       <button type="button" id="add-btn">Pievienot</button>
     </section>
 
+    <!-- U3: Statistikas panelis no skices -->
+    <section class="stats-section" aria-label="Statistika">
+      <h2>Statistika</h2>
+      <div class="stats-cards">
+        <div class="stat-card">
+          <span class="stat-label">Kopā</span>
+          <span id="stat-total" class="stat-value">0</span>
+        </div>
+        <div class="stat-card stat-completed">
+          <span class="stat-label">Izpildīti</span>
+          <span id="stat-completed" class="stat-value">0</span>
+        </div>
+        <div class="stat-card stat-overdue">
+          <span class="stat-label">Nokavēti</span>
+          <span id="stat-overdue" class="stat-value">0</span>
+        </div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar-bg">
+          <div id="stat-progress-bar" class="progress-bar-fill" style="width: 0%;"></div>
+        </div>
+        <span id="stat-progress-text" class="progress-text">0%</span>
+      </div>
+    </section>
+
     <section class="controls-section">
       <div class="filters" role="group" aria-label="Uzdevumu filtri">
         <button type="button" class="filter-btn active" data-filter="all">Visi</button>

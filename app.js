@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // U2 Palīgfunkcija 1: Datuma formatēšana (YYYY-MM-DD -> DD.MM.YYYY)
+  // U2: Datuma formatēšana (YYYY-MM-DD -> DD.MM.YYYY)
   function formatDate(dateStr) {
     if (!dateStr) return '';
     const parts = dateStr.split('-');
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return dateStr;
   }
 
-  // U2 Palīgfunkcija 2: Pārbaude, vai termiņš ir pagātnē (nokavēts)
+  // U2: Pārbaude, vai termiņš ir nokavēts
   function isOverdue(dueDate, completed) {
     if (!dueDate || completed) return false;
     const today = new Date();
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return due < today;
   }
 
-  // U2 Palīgfunkcija 3: Datuma birkas DOM elementa izveide
+  // U2: Datuma birkas DOM elementa izveide
   function createDateBadge(dueDate, completed) {
     if (!dueDate) return null;
     const badge = document.createElement('span');
@@ -58,6 +58,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const overdue = isOverdue(dueDate, completed);
     badge.textContent = overdue ? `📅 ${formatted} (nokavēts)` : `📅 ${formatted}`;
     return badge;
+  }
+
+  // U3: Statistikas paneļa renderēšana no skices
+  function renderStats() {
+    const total = tasks.length;
+    const completed = tasks.filter(t => t.completed).length;
+    const overdue = tasks.filter(t => isOverdue(t.dueDate, t.completed)).length;
+    const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+    const statTotalEl = document.getElementById('stat-total');
+    const statCompletedEl = document.getElementById('stat-completed');
+    const statOverdueEl = document.getElementById('stat-overdue');
+    const statProgressBar = document.getElementById('stat-progress-bar');
+    const statProgressText = document.getElementById('stat-progress-text');
+
+    if (statTotalEl) statTotalEl.textContent = total;
+    if (statCompletedEl) statCompletedEl.textContent = completed;
+    if (statOverdueEl) statOverdueEl.textContent = overdue;
+    if (statProgressBar) statProgressBar.style.width = `${percentage}%`;
+    if (statProgressText) statProgressText.textContent = `${percentage}%`;
   }
 
   function addTask() {
@@ -183,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
     contentDiv.appendChild(checkbox);
     contentDiv.appendChild(span);
 
-    // Pievienojam termiņa birku, ja tāds ir norādīts
     const dateBadge = createDateBadge(task.dueDate, task.completed);
     if (dateBadge) {
       contentDiv.appendChild(dateBadge);
@@ -232,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateCounter();
+    renderStats(); // U3: Viena izsaukuma rinda statistikas atjaunināšanai
   }
 
   // Notikumu klausītāji
