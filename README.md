@@ -1,8 +1,10 @@
-# Mani uzdevumi (PD1)
+# Mani uzdevumi (PD1) un (PD2)
 
-Vienkārša un moderna uzdevumu saraksta (To-Do) tīmekļa lietotne, kas izstrādāta kursa "Programmatūras izstrāde ar MI" praktiskā darba **PD1 "Pirmā strādājošā lietotne ar MI"** ietvaros.
+Vienkārša un moderna uzdevumu saraksta (To-Do) tīmekļa lietotne, kas izstrādāta kursa "Programmatūras izstrāde ar MI" praktiskā darba **PD1 "Pirmā strādājošā lietotne ar MI"** un **PD2: Lietotnes paplašināšana ar MI – konteksts, skice un Claude pret ChatGPT** ietvaros.
 
 Lietotne pilnībā darbojas klienta pārlūkprogrammā bez servera un bez interneta pieslēguma, izmantojot tikai HTML5, CSS3, JavaScript (ES6+) un pārlūka `LocalStorage`.
+
+https://youtu.be/k70oa9Ivii0?si=sMRufhNL5UkGryOR
 
 ---
 
