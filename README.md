@@ -5,6 +5,7 @@ Vienkārša un moderna uzdevumu saraksta (To-Do) tīmekļa lietotne, kas izstrā
 Lietotne pilnībā darbojas klienta pārlūkprogrammā bez servera un bez interneta pieslēguma, izmantojot tikai HTML5, CSS3, JavaScript (ES6+) un pārlūka `LocalStorage`.
 
 PD1 video https://youtu.be/k70oa9Ivii0?si=sMRufhNL5UkGryOR
+
 PD2 video https://youtu.be/kpzUgmUr1YE?si=1Zgt4CrZwp6KpP0K
 
 ---
